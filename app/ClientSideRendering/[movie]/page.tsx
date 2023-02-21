@@ -1,27 +1,31 @@
-import { IMAGE_PATH, BASE_URL } from "@/utils/urls";
+"use client"
+import { useEffect, useState } from "react";
 import axios from "axios";
+import { fetchSingleMovieDetailsUrl } from "@/utils/endPoints";
+import { IMAGE_PATH } from "@/utils/urls";
 
-// export async function generateStaticParams (){
-//     const data = await fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.API_KEY}`)
-//     const result = await data.json()
-//     return result.results.map((movie: any) => ({
-//         movie: movie.id.toString(),
-//     }));
-// }
+export default function MovieDetails({params }: any){
 
-export default async function MovieDetails({params }: any){
-const {movie} = params;
-const {data}: any = await axios.get(`${BASE_URL}/movie/${movie}?api_key=${process.env.API_KEY}`)
+    const [movie, setMovie] = useState<any>({})
 
+    useEffect(()=> {
+        const {movie} = params
+        getMovieDetails(movie)
+        },[])
 
+    const getMovieDetails = async (movie: any) => {
+        const url = fetchSingleMovieDetailsUrl(movie)
+        const {data} = await axios.get(url)
+        setMovie(data)
+    }
 
 return <section className="text-white body-font overflow-hidden">
 <div className="container px-5 py-24 mx-auto">
   <div className="lg:w-4/5 mx-auto flex flex-wrap">
-    <img alt={data.title} className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={IMAGE_PATH+data.backdrop_path}/>
+    <img alt={movie.title} className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={IMAGE_PATH+movie.backdrop_path}/>
     <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-      <h2 className="text-sm title-font text-white tracking-widest">{data.release_date}</h2>
-      <h1 className="text-white text-3xl title-font font-medium mb-1">{data.title}</h1>
+      <h2 className="text-sm title-font text-white tracking-widest">{movie.release_date}</h2>
+      <h1 className="text-white text-3xl title-font font-medium mb-1">{movie.title}</h1>
       <div className="flex mb-4">
         <span className="flex items-center">
           <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
@@ -39,7 +43,7 @@ return <section className="text-white body-font overflow-hidden">
           <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 text-indigo-500" viewBox="0 0 24 24">
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
           </svg>
-          <span className="text-white ml-3">{data.vote_count}</span>
+          <span className="text-white ml-3">{movie.vote_count}</span>
         </span>
         <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
           <a className="text-white">
@@ -59,12 +63,12 @@ return <section className="text-white body-font overflow-hidden">
           </a>
         </span>
       </div>
-      <p className="leading-relaxed">{data.overview}</p>
+      <p className="leading-relaxed">{movie.overview}</p>
       <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
       </div>
       <div className="flex">
-        {data.genres.map((gener: any) => (
-            <button className="flex mr-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">{gener.name}</button>
+        {movie?.genres?.map((genre: any) => (
+            <button className="flex mr-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">{genre.name}</button>
         ))}      </div>
     </div>
   </div>
