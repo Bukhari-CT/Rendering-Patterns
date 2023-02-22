@@ -13,12 +13,13 @@ useEffect(()=> {
 const fetchData = async ()=> {
     const url: string = fetchListUrl()
     const {data}: any = await axios.get(url)
+    console.log(data);
     setMoviesList(data.results)
 }
 
 return (
     <main>
-    <h1 className="text-white text-5xl">Filmxia</h1>
+    <h1 className="text-white text-5xl text-center pb-8">Filmxia CSR</h1>
     <div className="grid gap-16 grid-cols-fluid">
       {moviesList.map((movie: any) => (
         <Movie
