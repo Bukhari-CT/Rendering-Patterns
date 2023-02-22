@@ -3,7 +3,11 @@ import { IMAGE_PATH, BASE_URL } from "@/utils/urls";
 
 export default async function MovieDetails({ params }: any) {
   const { movie } = params;
-  const response: any = await fetch(fetchSingleMovieDetailsUrl(movie));
+  const response: any = await fetch(fetchSingleMovieDetailsUrl(movie), {
+    next: {
+      revalidate: 20,
+    },
+  });
   const data: any = await response.json();
 
   return (
