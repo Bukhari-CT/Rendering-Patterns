@@ -7,7 +7,7 @@ export default async function Home() {
     },
   });
   const data = await response.json();
-  console.log("🚀 ISR Movies List :", data.results.length);
+  console.log("Incremental Static Generation:: ✅");
 
   return (
     <main>

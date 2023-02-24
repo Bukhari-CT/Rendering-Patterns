@@ -5,7 +5,7 @@ export default async function Home() {
     cache: "no-store",
   });
   const data = await response.json();
-  console.log("🚀 ISR Movies List :", data.results.length);
+  console.log("Static Side Generation:: ✅");
 
   return (
     <main>

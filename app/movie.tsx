@@ -1,5 +1,6 @@
 export default function Movie({ title, id, key, poster_path, releaseDate, pageType = "" }: any) {
   const imagePath = "https://image.tmdb.org/t/p/original";
+
   return (
     <div>
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">

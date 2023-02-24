@@ -1,5 +1,5 @@
 import { fetchSingleMovieDetailsUrl } from "@/utils/endPoints";
-import { IMAGE_PATH, BASE_URL } from "@/utils/urls";
+import { IMAGE_PATH } from "@/utils/urls";
 
 export default async function MovieDetails({ params }: any) {
   const { movie } = params;
